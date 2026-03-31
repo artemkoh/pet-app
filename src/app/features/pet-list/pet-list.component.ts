@@ -12,4 +12,7 @@ import { PETS } from '../../shared/mock-data';
 })
 export class PetListComponent {
   pets = PETS;
+  handleCardAction(id: number) {
+    console.log(`Користувач натиснув кнопку на товарі з ID: ${id}`);
+  }
 }

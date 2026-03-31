@@ -1,11 +1,26 @@
-<div class="card">
+<div class="card" [class.premium-card]="pet.price > 5000">
+  @if (pet.isSpecial) {
+    <div class="top-badge">🔥 ТОП ПРОПОЗИЦІЯ</div>
+  }
+
   <img [src]="pet.imageUrl" [alt]="pet.name" class="pet-img">
+  
   <h3>{{ pet.name | uppercase }}</h3>
   <p>{{ pet.description }}</p>
-  
+
   <div class="info">
-    <p><strong>Порода:</strong> {{ pet.details.breed }}</p>
-    <p><strong>Статус:</strong> {{ pet.status }}</p>
+    <p><strong>Порода:</strong> {{ pet.details?.breed }}</p>
+    
+    <div class="status-box">
+      <strong>Статус:</strong>
+      @switch (pet.status) {
+        @case (PetStatus.Available) { <span class="badge green">Доступний</span> }
+        @case (PetStatus.Adopted) { <span class="badge red">В родині</span> }
+        @case (PetStatus.Reserved) { <span class="badge yellow">Заброньовано</span> }
+        @default { <span class="badge gray">Невідомо</span> }
+      }
+    </div>
+
     <p><strong>Дата народження:</strong> {{ pet.birthDate | date:'dd.MM.yyyy' }}</p>
   </div>
 
@@ -16,4 +31,12 @@
   </div>
 
   <p class="price">Ціна: {{ pet.price | currency:'UAH':'symbol':'1.0-0' }}</p>
+
+  <div class="card-actions">
+    @if (pet.status === PetStatus.Available) {
+      <button class="btn-main" (click)="onBtnClick()">Забрати додому</button>
+    } @else {
+      <button class="btn-disabled" disabled>Тимчасово недоступний</button>
+    }
+  </div>
 </div>

@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
-import { Pet } from '../../models/pet.model';
+import { Pet, PetStatus } from '../../models/pet.model';
 
 @Component({
   selector: 'pet-card',
@@ -11,4 +11,12 @@ import { Pet } from '../../models/pet.model';
 })
 export class PetCardComponent {
   @Input({ required: true }) pet!: Pet;
+
+  PetStatus = PetStatus; 
+
+  @Output() actionClicked = new EventEmitter<number>();
+
+  onBtnClick() {
+    this.actionClicked.emit(this.pet.id);
+  }
 }

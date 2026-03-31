@@ -11,13 +11,14 @@ export interface PetDetails {
 }
 
 export interface Pet {
-    id: number;
-    name: string;
-    description: string;
-    imageUrl: string;
-    price: number;
-    birthDate: Date;
-    status: PetStatus;
-    tags: string[];
-    details: PetDetails;
+  id: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  price: number;
+  birthDate: Date;
+  status: PetStatus;
+  tags: string[];
+  isSpecial?: boolean; 
+  details?: PetDetails; 
 }
