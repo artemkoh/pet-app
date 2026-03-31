@@ -1,0 +1,14 @@
+.pet-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+h2 { text-align: left; border-bottom: 2px solid #333; padding-bottom: 10px; }

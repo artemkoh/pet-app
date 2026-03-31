@@ -1,0 +1,9 @@
+<section class="pet-list-container">
+  <h2>Наші пухнастики</h2>
+  
+  <div class="grid-layout">
+    @for (item of pets; track item.id) {
+      <pet-card [pet]="item"></pet-card>
+    }
+  </div>
+</section>

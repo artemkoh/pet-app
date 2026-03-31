@@ -1,0 +1,19 @@
+<div class="card">
+  <img [src]="pet.imageUrl" [alt]="pet.name" class="pet-img">
+  <h3>{{ pet.name | uppercase }}</h3>
+  <p>{{ pet.description }}</p>
+  
+  <div class="info">
+    <p><strong>Порода:</strong> {{ pet.details.breed }}</p>
+    <p><strong>Статус:</strong> {{ pet.status }}</p>
+    <p><strong>Дата народження:</strong> {{ pet.birthDate | date:'dd.MM.yyyy' }}</p>
+  </div>
+
+  <div class="tags">
+    @for (tag of pet.tags; track tag) {
+      <span class="tag">#{{ tag }}</span>
+    }
+  </div>
+
+  <p class="price">Ціна: {{ pet.price | currency:'UAH':'symbol':'1.0-0' }}</p>
+</div>
