@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PetCardComponent } from '../../shared/components/pet-card/pet-card.component';
-import { PETS } from '../../shared/mock-data';
-import { PetStatus } from '../../shared/models/pet.model';
-
+import { PetService } from '../../shared/services/pet.service';
+import { Pet, PetStatus } from '../../shared/models/pet.model';
 @Component({
   selector: 'pet-list',
   standalone: true,
@@ -11,28 +10,41 @@ import { PetStatus } from '../../shared/models/pet.model';
   templateUrl: './pet-list.component.html',
   styleUrl: './pet-list.component.css'
 })
-export class PetListComponent {
-  allPets = PETS;
-  filteredPets = [...this.allPets];
+export class PetListComponent implements OnInit {
 
+  private petService = inject(PetService);
+
+  filteredPets: Pet[] = [];
   searchQuery = '';
   selectedStatus = 'Всі';
-
   statuses = ['Всі', PetStatus.Available, PetStatus.Adopted, PetStatus.Reserved];
 
-  filterItems() {
-    this.filteredPets = this.allPets.filter(pet => {
-      const matchesSearch = pet.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-      const matchesStatus = this.selectedStatus === 'Всі' || pet.status === this.selectedStatus;
-      
-      return matchesSearch && matchesStatus;
-    });
+  ngOnInit(): void {
+    this.loadData();
   }
 
-  resetFilters(element: HTMLInputElement) {
+  loadData(): void {
+    this.filteredPets = this.petService.getAll();
+  }
+
+  filterItems(): void {
+    this.filteredPets = this.petService.filterItems(this.searchQuery, this.selectedStatus);
+  }
+
+  resetFilters(element: HTMLInputElement): void {
     this.searchQuery = '';
     this.selectedStatus = 'Всі';
-    this.filterItems(); 
-    element.focus(); 
+    this.loadData();
+    element.focus();
+  }
+
+  handleCardAction(id: number): void {
+    this.petService.deleteItem(id);
+    
+    if (this.searchQuery || this.selectedStatus !== 'Всі') {
+      this.filterItems();
+    } else {
+      this.loadData();
+    }
   }
 }

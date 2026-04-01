@@ -29,7 +29,7 @@
 
   <div class="grid-layout">
     @for (item of filteredPets; track item.id) {
-      <pet-card [pet]="item"></pet-card>
+      <pet-card [pet]="item" (actionClicked)="handleCardAction($event)"></pet-card>
     }
   </div>
 </section>
