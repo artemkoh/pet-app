@@ -1,9 +1,35 @@
 <section class="pet-list-container">
   <h2>Наші пухнастики</h2>
-  
+
+  <div class="filters-panel" style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+    
+    <input 
+      type="text" 
+      #searchInput 
+      placeholder="Пошук за ім'ям..." 
+      [(ngModel)]="searchQuery" 
+      (ngModelChange)="filterItems()"
+      style="padding: 8px; width: 200px; border-radius: 4px; border: 1px solid #ccc;"
+    >
+
+    <select [(ngModel)]="selectedStatus" (ngModelChange)="filterItems()" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+      @for (status of statuses; track status) {
+        <option [value]="status">{{ status }}</option>
+      }
+    </select>
+
+    <button (click)="resetFilters(searchInput)" style="padding: 8px 16px; cursor: pointer; border-radius: 4px; background-color: #f0f0f0; border: 1px solid #ccc;">
+      Очистити фільтри
+    </button>
+  </div>
+
+  <p style="color: gray; font-size: 14px; margin-bottom: 20px;">
+    Пошуковий запит: <strong>{{ searchQuery }}</strong>
+  </p>
+
   <div class="grid-layout">
-    @for (item of pets; track item.id) {
-      <pet-card [pet]="item" (actionClicked)="handleCardAction($event)"></pet-card>
+    @for (item of filteredPets; track item.id) {
+      <pet-card [pet]="item"></pet-card>
     }
   </div>
 </section>
