@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, delay, map, debounceTime, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, Observable, delay, map, debounceTime, distinctUntilChanged, of } from 'rxjs';
 import { PETS } from '../mock-data';
 import { Pet } from '../models/pet.model';
 import { FilterOptions } from '../models/filter-options.model';
@@ -41,4 +41,11 @@ export class PetService {
     this.allPets = this.allPets.filter(item => item.id !== id);
     this.filterSubject$.next(this.filterSubject$.value);
   }
+
+  getById(id: number | string): Observable<Pet | undefined> {
+    const numericId = Number(id);
+    const pet = this.allPets.find(p => p.id === numericId);
+    return of(pet).pipe(delay(1000)); 
+  }
+
 }

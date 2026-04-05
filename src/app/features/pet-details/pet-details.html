@@ -1,0 +1,33 @@
+<section style="padding: 20px; max-width: 800px; margin: 0 auto;">
+  <a routerLink="/pets" style="display: inline-block; margin-bottom: 20px; text-decoration: none; color: #007bff; font-weight: bold;">
+    ← Назад до списку
+  </a>
+
+  @if (pet$ | async; as pet) {
+    <div style="border: 1px solid #ddd; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+      
+      <h2>{{ pet.name | uppercase }}</h2>
+      <p style="color: gray;">{{ pet.description }}</p>
+      
+      <p><strong>Порода:</strong> {{ pet.breed }}</p>
+      <p><strong>Ціна:</strong> {{ pet.price | currency:'UAH':'symbol-narrow' }}</p>
+      <p><strong>Дата народження:</strong> {{ pet.birthDate | date:'dd.MM.yyyy' }}</p>
+      
+      <div style="margin: 15px 0;">
+        <span style="background: #28a745; padding: 6px 12px; border-radius: 20px; color: white; font-size: 14px;">
+          Статус: {{ pet.status }}
+        </span>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 20px;">
+        @for (tag of pet.tags; track tag) {
+          <span style="background: #f1f1f1; padding: 4px 10px; border-radius: 6px; font-size: 13px;">#{{ tag }}</span>
+        }
+      </div>
+    </div>
+  } @else {
+    <div style="text-align: center; padding: 50px; color: #666;">
+      <h3>⏳ Завантаження досьє пухнастика...</h3>
+    </div>
+  }
+</section>
