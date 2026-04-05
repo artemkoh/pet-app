@@ -27,9 +27,16 @@
     Пошуковий запит: <strong>{{ searchQuery }}</strong>
   </p>
 
-  <div class="grid-layout">
-    @for (item of filteredPets; track item.id) {
-      <pet-card [pet]="item" (actionClicked)="handleCardAction($event)"></pet-card>
-    }
-  </div>
+  @if (pets$ | async; as pets) {
+    <div class="grid-layout">
+      @for (item of pets; track item.id) {
+        <pet-card [pet]="item" (actionClicked)="handleCardAction($event)"></pet-card>
+      }
+    </div>
+  } @else {
+    <div style="text-align: center; padding: 50px; color: #666;">
+      <h3>⏳ Завантаження пухнастиків...</h3>
+      <p>Шукаємо дані на сервері, зачекайте 1 секунду.</p>
+    </div>
+  }
 </section>
