@@ -9,7 +9,7 @@
       <h2>{{ pet.name | uppercase }}</h2>
       <p style="color: gray;">{{ pet.description }}</p>
       
-      <p><strong>Порода:</strong> {{ pet.breed }}</p>
+      <p><strong>Порода:</strong> {{ pet.details?.breed }}</p>
       <p><strong>Ціна:</strong> {{ pet.price | currency:'UAH':'symbol-narrow' }}</p>
       <p><strong>Дата народження:</strong> {{ pet.birthDate | date:'dd.MM.yyyy' }}</p>
       
